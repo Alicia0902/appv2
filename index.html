@@ -1,0 +1,210 @@
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="color-scheme" content="light dark" />
+  <title>BudgetFlow</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="responsive.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <header class="app-header">
+      <div>
+        <h1>BudgetFlow</h1>
+        <p class="subtitle">Where Every Euro Finds Its Flow.</p>
+      </div>
+
+      <div class="header-actions">
+        <div class="theme-switch-wrap">
+          <span id="themeLabel" class="theme-label">Light</span>
+          <label class="ios-switch" for="themeSwitch">
+            <input id="themeSwitch" type="checkbox" role="switch" aria-label="Toggle dark mode" />
+            <span class="ios-slider"></span>
+          </label>
+        </div>
+        <div id="todayDate" class="date-pill">--</div>
+      </div>
+    </header>
+
+    <nav class="tab-nav" aria-label="Main sections">
+      <button type="button" class="tab-btn active" data-tab="dashboard">Dashboard</button>
+      <button type="button" class="tab-btn" data-tab="goals">Goals</button>
+      <button type="button" class="tab-btn" data-tab="income">Income</button>
+      <button type="button" class="tab-btn" data-tab="expenses">Expenses</button>
+      <button type="button" class="tab-btn" data-tab="investments">ETF</button>
+    </nav>
+
+    <main class="tab-panels">
+      <section id="tab-dashboard" class="tab-panel active" role="tabpanel">
+        <div class="grid-3">
+          <article class="metric">
+            <span class="label">Total income</span>
+            <span id="sumIncome" class="value">€0,00</span>
+          </article>
+          <article class="metric">
+            <span class="label">Total expenses</span>
+            <span id="sumExpenses" class="value">€0,00</span>
+          </article>
+          <article class="metric">
+            <span class="label">Surplus</span>
+            <span id="sumSurplus" class="value">€0,00</span>
+          </article>
+        </div>
+
+        <article class="card">
+          <h2 class="section-title">Monthly surplus overview</h2>
+          <div id="monthlyOverview" class="list"></div>
+        </article>
+
+        <article class="card">
+          <h2 class="section-title">Savings goals snapshot</h2>
+          <div id="goalSnapshot" class="list"></div>
+        </article>
+      </section>
+
+      <section id="tab-goals" class="tab-panel" role="tabpanel">
+        <article class="card">
+          <h2 class="section-title">Savings goals</h2>
+          <form id="goalForm" class="form-grid" autocomplete="off">
+            <label class="form-field">
+              <span>Goal name</span>
+              <input id="goalName" type="text" maxlength="40" placeholder="Emergency fund" required />
+            </label>
+
+            <label class="form-field">
+              <span>Target amount (€)</span>
+              <input id="goalTarget" type="text" inputmode="decimal" placeholder="5000,00" required />
+            </label>
+
+            <label class="form-field">
+              <span>Saved so far (€)</span>
+              <input id="goalSaved" type="text" inputmode="decimal" placeholder="1200,00" />
+            </label>
+
+            <button type="submit" class="btn-primary">Add goal</button>
+          </form>
+        </article>
+
+        <div id="goalsList" class="stack"></div>
+      </section>
+
+      <section id="tab-income" class="tab-panel" role="tabpanel">
+        <article class="card">
+          <h2 class="section-title">Income</h2>
+          <form id="incomeForm" class="form-grid" autocomplete="off">
+            <label class="form-field">
+              <span>Source</span>
+              <input id="incomeSource" type="text" maxlength="40" placeholder="Salary" required />
+            </label>
+
+            <label class="form-field">
+              <span>Amount (€)</span>
+              <input id="incomeAmount" type="text" inputmode="decimal" placeholder="4000,00" required />
+            </label>
+
+            <label class="form-field">
+              <span>Date</span>
+              <input id="incomeDate" type="date" required />
+            </label>
+
+            <button type="submit" class="btn-primary">Add income</button>
+          </form>
+        </article>
+
+        <article class="card">
+          <h2 class="section-title">Income entries</h2>
+          <div id="incomeList" class="list"></div>
+        </article>
+      </section>
+
+      <section id="tab-expenses" class="tab-panel" role="tabpanel">
+        <article class="card">
+          <h2 class="section-title">Expenses</h2>
+          <form id="expenseForm" class="form-grid" autocomplete="off">
+            <label class="form-field">
+              <span>Expense</span>
+              <input id="expenseName" type="text" maxlength="40" placeholder="Rent" required />
+            </label>
+
+            <label class="form-field">
+              <span>Category</span>
+              <select id="expenseCategory" required>
+                <option value="Housing">Fixed costs</option>
+                <option value="Food">Outstanding payments</option>
+                <option value="Other">Other</option>
+              </select>
+            </label>
+
+            <label class="form-field">
+              <span>Amount (€)</span>
+              <input id="expenseAmount" type="text" inputmode="decimal" placeholder="778,99" required />
+            </label>
+
+            <label class="form-field">
+              <span>Date</span>
+              <input id="expenseDate" type="date" required />
+            </label>
+
+            <button type="submit" class="btn-primary">Add expense</button>
+          </form>
+        </article>
+
+        <article class="card">
+          <h2 class="section-title">Expense entries</h2>
+          <div id="expenseList" class="list"></div>
+        </article>
+      </section>
+
+      <section id="tab-investments" class="tab-panel" role="tabpanel">
+        <article class="card">
+          <h2 class="section-title">ETF tracker</h2>
+
+          <form id="etfForm" class="form-grid form-grid-compact" autocomplete="off">
+            <label class="form-field">
+              <span>Monthly investment (€)</span>
+              <input id="etfMonthly" type="text" inputmode="decimal" placeholder="500,00" required />
+            </label>
+
+            <label class="form-field">
+              <span>Investment duration (years)</span>
+              <input id="etfYears" type="number" min="1" step="1" placeholder="10" required />
+            </label>
+
+            <button type="submit" class="btn-primary">Calculate</button>
+          </form>
+
+          <div class="grid-2 etf-results">
+            <article class="metric">
+              <span class="label">Total invested</span>
+              <span id="etfTotalInvested" class="value">€0,00</span>
+            </article>
+            <article class="metric">
+              <span class="label">Expected value (7%)</span>
+              <span id="etfExpected" class="value">€0,00</span>
+            </article>
+            <article class="metric">
+              <span class="label">Optimistic (10%)</span>
+              <span id="etfOptimistic" class="value">€0,00</span>
+            </article>
+            <article class="metric">
+              <span class="label">Pessimistic (4%)</span>
+              <span id="etfPessimistic" class="value">€0,00</span>
+            </article>
+          </div>
+
+          <p class="muted">Assumption: monthly contributions with monthly compounding.</p>
+        </article>
+      </section>
+    </main>
+  </div>
+
+  <script src="app.js"></script>
+  <script src="savings.js"></script>
+  <script src="income.js"></script>
+  <script src="expenses.js"></script>
+  <script src="investments.js"></script>
+</body>
+</html>
