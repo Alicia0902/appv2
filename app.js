@@ -390,3 +390,39 @@
     if (dateClockIntervalId) clearInterval(dateClockIntervalId);
   });
 })();
+
+// ...existing code...
+function setState(nextState) {
+  state = normalizeState(nextState);
+  saveState();
+  window.BudgetPersistence?.save(state);
+  renderDashboard();
+  emitState();
+}
+// ...existing code...
+
+document.addEventListener("DOMContentLoaded", async () => {
+  setupThemeSwitch();
+  setupTabs();
+  startDateTimeClock();
+
+  const localEnv = window.BudgetPersistence?.load();
+  if (localEnv?.data) {
+    state = normalizeState(localEnv.data);
+  }
+
+  renderDashboard();
+  emitState();
+
+  // optional cloud sync (requires backend + auth token)
+  const token = window.Auth?.getToken?.();
+  if (token && window.BudgetSync) {
+    const remoteEnv = await window.BudgetSync.pull(token);
+    const merged = window.BudgetSync.merge(localEnv, remoteEnv);
+    if (merged?.data) {
+      setState(merged.data);
+      await window.BudgetSync.push(token, merged);
+    }
+  }
+});
+// ...existing code...
